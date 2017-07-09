@@ -1,21 +1,22 @@
 #include "FBullCowGame.h"
 
-FBullCowGame::FBullCowGame()
-{
-	Reset();
-}
+FBullCowGame::FBullCowGame() { 	Reset(); }
+
+int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
+
+int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
+int32 FBullCowGame::GetMyTries() const { return 0; }
+int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 
 
 void FBullCowGame::Reset()
 {
 	constexpr int32 MAX_TRIES = 8;
-	MyMaxTries = MAX_TRIES;
-	
-	const FString Hidden_Word = "planet";
-	MyHiddenWord = Hidden_Word;
+	const FString Hidden_Word = "ant";
 
+	MyMaxTries = MAX_TRIES;
+	MyHiddenWord = Hidden_Word;
 	MyCurrentTry = 1;
-	
 	return;
 }
 
@@ -29,18 +30,22 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
 	MyCurrentTry++;
 	FBullCowCount BullCowCount;
 	
-	int32 length = MyHiddenWord.length();
-	for(int32 i = 0; i < length; i++)
+	int32 HiddenWordLength = MyHiddenWord.length();
+	for(int32 MHWChar = 0; MHWChar < HiddenWordLength; MHWChar++)
 	{
 		// comare letters agains the hidded word
-		for (int32 j=0; j < length; j++)
+		for (int32 GChar=0; GChar < HiddenWordLength; GChar++)
 		{
-			if (MyHiddenWord[i] == Guess[j])
+			if (Guess[GChar] == MyHiddenWord[MHWChar] )
 			{
-				BullCowCount.Bulls++;
-			}else
-			{
-				BullCowCount.Cows++;
+				if (MHWChar == GChar) // if they're in the same place
+				{
+					BullCowCount.Bulls++;
+				}
+				else
+				{
+					BullCowCount.Cows++;
+				}
 			}
 		}
 	}
@@ -48,21 +53,12 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
 	return  BullCowCount;
 }
 
-int32 FBullCowGame::GetMaxTries()
-{
-	return MyMaxTries;
-}
-
-int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry;}
-
-int32 FBullCowGame::GetMyTries() const {	return 0; }
-
-bool FBullCowGame::IsGameWon()
+bool FBullCowGame::IsGameWon() const
 {
 	return false;
 }
 
-bool FBullCowGame::CheckGuessValidity(FString)
+bool FBullCowGame::CheckGuessValidity(FString) const
 {
 	return false;
 }

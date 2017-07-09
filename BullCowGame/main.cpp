@@ -1,6 +1,4 @@
-/* This is the console executable, thay
- * 
- *
+/* This is the console executable, that create game and run it
  */
 
 #include <iostream>
@@ -37,7 +35,7 @@ int main()
 void PrintIntro()
 {
 	// introduce the game
-	constexpr int32 WORD_LENGTH = 5;
+	int32 WORD_LENGTH = BCGame.GetHiddenWordLength();
 
 	std::cout << "Welcome to bulls and cows, a fun word game.\n";
 	std::cout << "Can you guess the" << WORD_LENGTH;
@@ -92,7 +90,7 @@ void PlayGame()
 		// print numbe of bulls and cows
 
 		std::cout << "Bulls = " << bull_cow_count.Bulls;
-		std::cout << ". Cows = " << bull_cow_count.Cows;
+		std::cout << ". Cows = " << bull_cow_count.Cows << std::endl;
 
 		//PrintInput(Guess);
 	}

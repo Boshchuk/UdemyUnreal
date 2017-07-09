@@ -17,13 +17,14 @@ public:
 	
 	FBullCowGame(); //constructor
 
-	int32 GetMaxTries();
+	int32 GetMaxTries() const;
 
 	int32 GetCurrentTry() const;
 	int32 GetMyTries() const;
+	int32 GetHiddenWordLength() const;
 
-	bool IsGameWon();
-	bool CheckGuessValidity(FString );
+	bool IsGameWon() const;
+	bool CheckGuessValidity(FString) const;
 
 	void StartGame();
 	void DisplayHelp();
