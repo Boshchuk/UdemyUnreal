@@ -1,0 +1,42 @@
+#pragma once
+
+#include <string>
+
+using FString = std::string;
+using int32 = int;
+
+struct FBullCowCount
+{
+	int32 Bulls = 0;
+	int32 Cows = 0;
+};
+
+class FBullCowGame
+{
+public:
+	
+	FBullCowGame(); //constructor
+
+	int32 GetMaxTries();
+
+	int32 GetCurrentTry() const;
+	int32 GetMyTries() const;
+
+	bool IsGameWon();
+	bool CheckGuessValidity(FString );
+
+	void StartGame();
+	void DisplayHelp();
+	void GetInput();
+	bool WantRestart();
+	void Reset();
+	void Reset(int32 WordLength); // TODO: make more reach return
+
+	// provide a methode for counting bulls and cows, and increasing try #
+	FBullCowCount SubmitGuess(FString Guess);
+private:
+	// see constructor for initialization
+	int32 MyCurrentTry;
+	int32 MyMaxTries;
+	FString MyHiddenWord;
+};
