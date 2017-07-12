@@ -45,7 +45,8 @@ void PrintIntro()
 	return;
 }
 
-FString GetGuess() {
+FString GetGuess()  // TODO make loop checking valid
+{ 
 	FString Guess = "";
 
 	int32 currentTry = BCGame.GetCurrentTry();
@@ -79,10 +80,12 @@ void PlayGame()
 {
 	BCGame.Reset();
 	int32 MaxTries = BCGame.GetMaxTries();
-	// Todo: change from for to while loop
-	for (int32 i = 0; i < MaxTries; i++)
+	
+	for (int32 i = 0; i < MaxTries; i++) // Todo: change from for to while loop
 	{
-		FString Guess = GetGuess(); // TODO make loop checking valid
+		FString Guess = GetGuess(); 
+
+		EGuessStatus Status = BCGame.CheckGuessValidity(Guess);
 
 		// submit valid guess to the game, and recieve counts
 		FBullCowCount bull_cow_count = BCGame.SubmitGuess(Guess);
