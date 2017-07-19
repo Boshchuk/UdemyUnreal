@@ -45,17 +45,38 @@ void PrintIntro()
 	return;
 }
 
-FString GetGuess()  // TODO make loop checking valid
-{ 
-	FString Guess = "";
+// loop continualy until get valid guess
+FString GetValidGuess()
+{
+	EGuessStatus Status = EGuessStatus::Invalid_Status;
+	do {
+		FString Guess = "";
 
-	int32 currentTry = BCGame.GetCurrentTry();
+		int32 currentTry = BCGame.GetCurrentTry();
 
-	std::cout <<"Try " << currentTry << ". Enter you guess: ";
-	getline(std::cin, Guess);
+		std::cout << "Try " << currentTry << ". Enter you guess: ";
+		getline(std::cin, Guess);
 
-	return Guess;
+		Status = BCGame.CheckGuessValidity(Guess);
+
+		switch (Status)
+		{
+		case EGuessStatus::Wrong_Length:
+			std::cout << "Please enter a " + BCGame.GetHiddenWordLength + "letter word.\n";
+			break;
+		case EGuessStatus::Not_Isogram:
+			std::cout << "Please enter a word without repeating letters.\n";
+			break;
+		case EGuessStatus::Not_Lowercase:
+			std::cout << "Please enter all letters in lower case.\n";
+			break;
+		default:
+			return Guess;
+		}
+		std::cout << std::endl;
+	} while (Status != EGuessStatus::Ok); // keep looping 
 }
+
 
 void PrintInput(FString Guess)
 {
@@ -83,9 +104,7 @@ void PlayGame()
 	
 	for (int32 i = 0; i < MaxTries; i++) // Todo: change from for to while loop
 	{
-		FString Guess = GetGuess(); 
-
-		EGuessStatus Status = BCGame.CheckGuessValidity(Guess);
+		FString Guess = GetValidGuess(); 
 
 		// submit valid guess to the game, and recieve counts
 		FBullCowCount bull_cow_count = BCGame.SubmitGuess(Guess);
@@ -93,7 +112,7 @@ void PlayGame()
 		// print numbe of bulls and cows
 
 		std::cout << "Bulls = " << bull_cow_count.Bulls;
-		std::cout << ". Cows = " << bull_cow_count.Cows << std::endl;
+		std::cout << ". Cows = " << bull_cow_count.Cows << "\n\n";
 
 		//PrintInput(Guess);
 	}
