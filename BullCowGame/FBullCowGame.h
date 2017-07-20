@@ -29,11 +29,9 @@ public:
 	FBullCowGame(); //constructor
 
 	int32 GetMaxTries() const;
-
 	int32 GetCurrentTry() const;
 	int32 GetMyTries() const;
 	int32 GetHiddenWordLength() const;
-
 	bool IsGameWon() const;
 	EGuessStatus CheckGuessValidity(FString) const;
 
@@ -44,6 +42,8 @@ public:
 	void Reset();
 	void Reset(int32 WordLength); // TODO: make more reach return
 
+	
+
 	// provide a methode for counting bulls and cows, and increasing try #
 	FBullCowCount SubmitValidGuess(FString Guess);
 private:
@@ -51,4 +51,5 @@ private:
 	int32 MyCurrentTry;
 	int32 MyMaxTries;
 	FString MyHiddenWord;
+	bool bGameIsWon;
 };

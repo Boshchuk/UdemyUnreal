@@ -7,16 +7,36 @@ int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetMyTries() const { return 0; }
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
+bool FBullCowGame::IsGameWon() const { 	return bGameIsWon; }
 
+EGuessStatus FBullCowGame::CheckGuessValidity(FString guess) const
+{
+	if (false)// if the guess isn't an isogram
+	{
+		return EGuessStatus::Not_Isogram;
+	}
+	else if (false) {
+		return EGuessStatus::Not_Lowercase;
+	}
+	else if (guess.length != GetHiddenWordLength())
+	{
+		return EGuessStatus::Wrong_Length;
+	}
+	else
+	{
+		return EGuessStatus::Ok;
+	}
+}
 
 void FBullCowGame::Reset()
 {
 	constexpr int32 MAX_TRIES = 8;
-	const FString Hidden_Word = "ant";
+	const FString Hidden_Word = "planet";
 
 	MyMaxTries = MAX_TRIES;
 	MyHiddenWord = Hidden_Word;
 	MyCurrentTry = 1;
+	bGameIsWon = false;
 	return;
 }
 
@@ -24,6 +44,7 @@ void FBullCowGame::Reset(int32 WordLength)
 {
 	return;
 }
+
 //Recive a VALID Guess, incriments turns and returns count
 FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 {
@@ -50,41 +71,20 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 			}
 		}
 	}
-
-	return  BullCowCount;
-}
-
-bool FBullCowGame::IsGameWon() const
-{
-	return false;
-}
-
-EGuessStatus FBullCowGame::CheckGuessValidity(FString guess) const
-{
-	if (false)// if the guess isn't an isogram
+	if (BullCowCount.Bulls == WordLength)
 	{
-		return EGuessStatus::Not_Isogram;
-	}
-	else if (false) {
-		return EGuessStatus::Not_Lowercase;
-	}	
-	else if (guess.length != GetHiddenWordLength())
-	{
-		return EGuessStatus::Wrong_Length;
+		bGameIsWon = true;
 	}
 	else
 	{
-		return EGuessStatus::Ok;
+		bGameIsWon = false;
 	}
-
-
-		// return error
-	//if the guess isn't all lowecase
-		//return error
-	// otherwise 
-		//return ok
-
+	return  BullCowCount;
 }
+
+
+
+
 
 void FBullCowGame::StartGame()
 {

@@ -12,8 +12,11 @@ void PrintIntro();
 void PlayGame();
 bool AskToPlayAgain();
 
-FString GetGuess();
+FString GetValidGuess();
 void PrintInput(FString Guess);
+void PrintGameSummary();
+
+
 
 FBullCowGame BCGame; // instanstiate a game
 
@@ -37,10 +40,34 @@ void PrintIntro()
 	// introduce the game
 	int32 WORD_LENGTH = BCGame.GetHiddenWordLength();
 
-	std::cout << "Welcome to bulls and cows, a fun word game.\n";
+	std::cout << "\n\nWelcome to bulls and cows, a fun word game.\n";
 	std::cout << "Can you guess the" << WORD_LENGTH;
 	std::cout << " letter isogramm I'm thinking on?\n";
 	std::cout << std::endl;
+
+	return;
+}
+
+void PlayGame()
+{
+	BCGame.Reset();
+	int32 MaxTries = BCGame.GetMaxTries();
+
+	while (!BCGame.IsGameWon() && BCGame.GetCurrentTry() <= MaxTries)
+	{
+		FString Guess = GetValidGuess();
+
+		// submit valid guess to the game, and recieve counts
+		FBullCowCount bull_cow_count = BCGame.SubmitValidGuess(Guess);
+
+		// print number of bulls and cows
+
+		std::cout << "Bulls = " << bull_cow_count.Bulls;
+		std::cout << ". Cows = " << bull_cow_count.Cows << "\n\n";
+
+	}
+
+	PrintGameSummary();
 
 	return;
 }
@@ -91,7 +118,7 @@ void PrintInput(FString Guess)
 
 bool AskToPlayAgain()
 {
-	std::cout << "Do you watn to play again (y/n)? ";
+	std::cout << "Do you want to play again with same hidden word (y/n)? ";
 	FString Response = "";
 	getline(std::cin, Response);
 
@@ -100,26 +127,17 @@ bool AskToPlayAgain()
 	return (firstLetter =='y') || (firstLetter =='Y');
 }
 
-
-void PlayGame()
+void PrintGameSummary() 
 {
-	BCGame.Reset();
-	int32 MaxTries = BCGame.GetMaxTries();
-	
-	for (int32 i = 0; i < MaxTries; i++) // Todo: change from for to while loop
+	if (BCGame.IsGameWon()) 
 	{
-		FString Guess = GetValidGuess(); 
-
-		// submit valid guess to the game, and recieve counts
-		FBullCowCount bull_cow_count = BCGame.SubmitValidGuess(Guess);
-
-		// print numbe of bulls and cows
-
-		std::cout << "Bulls = " << bull_cow_count.Bulls;
-		std::cout << ". Cows = " << bull_cow_count.Cows << "\n\n";
-
-		//PrintInput(Guess);
+		std::cout << "\n You won!\n";
+	}
+	else 
+	{
+		std::cout << "\n Bad luck!\n";
 	}
 
-	// TODO: summarise game
-}
+	return;
+};
+
