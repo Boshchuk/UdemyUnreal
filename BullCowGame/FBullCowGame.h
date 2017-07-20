@@ -45,7 +45,7 @@ public:
 	void Reset(int32 WordLength); // TODO: make more reach return
 
 	// provide a methode for counting bulls and cows, and increasing try #
-	FBullCowCount SubmitGuess(FString Guess);
+	FBullCowCount SubmitValidGuess(FString Guess);
 private:
 	// see constructor for initialization
 	int32 MyCurrentTry;

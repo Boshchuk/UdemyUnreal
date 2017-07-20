@@ -49,8 +49,9 @@ void PrintIntro()
 FString GetValidGuess()
 {
 	EGuessStatus Status = EGuessStatus::Invalid_Status;
+	FString Guess = "";
 	do {
-		FString Guess = "";
+		
 
 		int32 currentTry = BCGame.GetCurrentTry();
 
@@ -71,10 +72,13 @@ FString GetValidGuess()
 			std::cout << "Please enter all letters in lower case.\n";
 			break;
 		default:
-			return Guess;
+			// assume the Guess is valid;
+			break;
 		}
 		std::cout << std::endl;
 	} while (Status != EGuessStatus::Ok); // keep looping 
+
+	return Guess;
 }
 
 
@@ -107,7 +111,7 @@ void PlayGame()
 		FString Guess = GetValidGuess(); 
 
 		// submit valid guess to the game, and recieve counts
-		FBullCowCount bull_cow_count = BCGame.SubmitGuess(Guess);
+		FBullCowCount bull_cow_count = BCGame.SubmitValidGuess(Guess);
 
 		// print numbe of bulls and cows
 

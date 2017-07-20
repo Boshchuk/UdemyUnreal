@@ -25,16 +25,17 @@ void FBullCowGame::Reset(int32 WordLength)
 	return;
 }
 //Recive a VALID Guess, incriments turns and returns count
-FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
+FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 {
 	MyCurrentTry++;
 	FBullCowCount BullCowCount;
-	
-	int32 HiddenWordLength = MyHiddenWord.length();
-	for(int32 MHWChar = 0; MHWChar < HiddenWordLength; MHWChar++)
+	int32 WordLength = MyHiddenWord.length(); // assuming same length as guess
+
+
+	for(int32 MHWChar = 0; MHWChar < WordLength; MHWChar++)
 	{
 		// comare letters agains the hidded word
-		for (int32 GChar=0; GChar < HiddenWordLength; GChar++)
+		for (int32 GChar=0; GChar < WordLength; GChar++)
 		{
 			if (Guess[GChar] == MyHiddenWord[MHWChar] )
 			{
