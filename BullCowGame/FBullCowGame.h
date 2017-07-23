@@ -46,10 +46,17 @@ public:
 
 	// provide a methode for counting bulls and cows, and increasing try #
 	FBullCowCount SubmitValidGuess(FString Guess);
+
+
+
+
 private:
 	// see constructor for initialization
 	int32 MyCurrentTry;
 	int32 MyMaxTries;
 	FString MyHiddenWord;
 	bool bGameIsWon;
+
+
+	bool IsIsogram(FString) const;
 };
