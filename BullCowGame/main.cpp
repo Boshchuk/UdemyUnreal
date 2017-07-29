@@ -78,11 +78,10 @@ FString GetValidGuess()
 	EGuessStatus Status = EGuessStatus::Invalid_Status;
 	FString Guess = "";
 	do {
-		
-
 		int32 currentTry = BCGame.GetCurrentTry();
 
-		std::cout << "Try " << currentTry << ". Enter you guess: ";
+		std::cout << "Try " << currentTry << " of " << BCGame.GetMaxTries();
+		std::cout << ". Enter you guess: ";
 		getline(std::cin, Guess);
 
 		Status = BCGame.CheckGuessValidity(Guess);
@@ -90,19 +89,19 @@ FString GetValidGuess()
 		switch (Status)
 		{
 		case EGuessStatus::Wrong_Length:
-			std::cout << "Please enter a " + BCGame.GetHiddenWordLength + "letter word.\n";
+			std::cout << "Please enter a " << BCGame.GetHiddenWordLength() << "letter word.\n\n";
 			break;
 		case EGuessStatus::Not_Isogram:
-			std::cout << "Please enter a word without repeating letters.\n";
+			std::cout << "Please enter a word without repeating letters.\n\n";
 			break;
 		case EGuessStatus::Not_Lowercase:
-			std::cout << "Please enter all letters in lower case.\n";
+			std::cout << "Please enter all letters in lower case.\n\n";
 			break;
 		default:
 			// assume the Guess is valid;
 			break;
 		}
-		std::cout << std::endl;
+		
 	} while (Status != EGuessStatus::Ok); // keep looping 
 
 	return Guess;
@@ -135,7 +134,7 @@ void PrintGameSummary()
 	}
 	else 
 	{
-		std::cout << "\n Bad luck!\n";
+		std::cout << "Better kuck next time!\n";
 	}
 
 	return;

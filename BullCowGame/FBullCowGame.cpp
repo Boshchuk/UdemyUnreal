@@ -2,25 +2,34 @@
 #include <map>
 #define TMap std::map
 
+using int32 = int;
+
 FBullCowGame::FBullCowGame() { 	Reset(); }
 
-int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
+
 
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetMyTries() const { return 0; }
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { 	return bGameIsWon; }
 
-EGuessStatus FBullCowGame::CheckGuessValidity(FString guess) const
+int32 FBullCowGame::GetMaxTries() const { 
+	TMap<int32, int32> WorldLenghtToMaxTries{ {3,5},{4,5}, {5,5} };
+
+	return WorldLenghtToMaxTries[MyHiddenWord.length()];
+}
+
+
+EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 {
-	if (!IsIsogram(guess))// if the guess isn't an isogram
+	if (!IsIsogram(Guess))// if the guess isn't an isogram
 	{
 		return EGuessStatus::Not_Isogram;
 	}
-	else if (false) {
+	else if (!IsLowercase(Guess)) {
 		return EGuessStatus::Not_Lowercase;
 	}
-	else if (guess.length != GetHiddenWordLength())
+	else if (Guess.length() != GetHiddenWordLength())
 	{
 		return EGuessStatus::Wrong_Length;
 	}
@@ -32,10 +41,8 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString guess) const
 
 void FBullCowGame::Reset()
 {
-	constexpr int32 MAX_TRIES = 8;
 	const FString Hidden_Word = "planet";
 
-	MyMaxTries = MAX_TRIES;
 	MyHiddenWord = Hidden_Word;
 	MyCurrentTry = 1;
 	bGameIsWon = false;
@@ -91,7 +98,7 @@ bool FBullCowGame::IsIsogram(FString Word) const
 
 	TMap<char, bool> LetterSeen; // setup map
 
-	for (char Letter : Word) // for all kerrers of the world
+	for (auto Letter : Word) // for all kerrers of the world
 	{
 		Letter = tolower(Letter);
 		if (LetterSeen[Letter] == true)
@@ -107,7 +114,21 @@ bool FBullCowGame::IsIsogram(FString Word) const
 	return true;
 }
 
+bool FBullCowGame::IsLowercase(FString Word) const
+{
+	// treat 0 and 1 letter word as isogramm
+	if (Word.length() == 0) { return true; }
 
+	for (auto Letter : Word) // for all kerrers of the world
+	{
+		if (!islower(Letter))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
 
 
 
