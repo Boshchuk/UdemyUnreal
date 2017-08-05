@@ -1,9 +1,14 @@
-#pragma once
+/*The game logic(no view cide or direct user interaction)
+The game is a simple guess thw word game base on MasterMind
+*/
 
+#pragma once
 #include <string>
 
+// to make syntax Unreal friendly
 using FString = std::string;
 using int32 = int;
+
 
 struct FBullCowCount
 {
@@ -40,15 +45,9 @@ public:
 	void GetInput();
 	bool WantRestart();
 	void Reset();
-	void Reset(int32 WordLength); // TODO: make more reach return
-
-	
 
 	// provide a methode for counting bulls and cows, and increasing try #
 	FBullCowCount SubmitValidGuess(FString Guess);
-
-
-
 
 private:
 	// see constructor for initialization

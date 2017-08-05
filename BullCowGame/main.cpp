@@ -1,10 +1,13 @@
 /* This is the console executable, that create game and run it
  */
 
+#pragma once
+
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
 
+// to make syntax Unreal friendly
 using FString = std::string;
 using int32 = int;
 
@@ -18,7 +21,7 @@ void PrintGameSummary();
 
 
 
-FBullCowGame BCGame; // instanstiate a game
+FBullCowGame BCGame; // instanstiate a new game, which we re-use across plays
 
 
 int main()
@@ -48,6 +51,7 @@ void PrintIntro()
 	return;
 }
 
+// plats a single game to complitions
 void PlayGame()
 {
 	BCGame.Reset();

@@ -1,7 +1,10 @@
+#pragma once
+
 #include "FBullCowGame.h"
 #include <map>
-#define TMap std::map
 
+// to make syntax unreal
+#define TMap std::map
 using int32 = int;
 
 FBullCowGame::FBullCowGame() { 	Reset(); }
@@ -14,7 +17,7 @@ int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); 
 bool FBullCowGame::IsGameWon() const { 	return bGameIsWon; }
 
 int32 FBullCowGame::GetMaxTries() const { 
-	TMap<int32, int32> WorldLenghtToMaxTries{ {3,5},{4,5}, {5,5} };
+	TMap<int32, int32> WorldLenghtToMaxTries{ {3,4},{4,7}, {5,10},{6,15},{7,20} };
 
 	return WorldLenghtToMaxTries[MyHiddenWord.length()];
 }
@@ -41,16 +44,11 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 
 void FBullCowGame::Reset()
 {
-	const FString Hidden_Word = "planet";
+	const FString Hidden_Word = "planet"; // this must be an isigram
 
 	MyHiddenWord = Hidden_Word;
 	MyCurrentTry = 1;
 	bGameIsWon = false;
-	return;
-}
-
-void FBullCowGame::Reset(int32 WordLength)
-{
 	return;
 }
 
